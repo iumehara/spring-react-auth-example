@@ -1,6 +1,6 @@
 import NetworkBookRepo from './NetworkBookRepo'
 import FetchWrapper from './FetchWrapper'
-import Book from '../dto/Book'
+import BookDto from '../dto/BookDto'
 
 class SpyFetchWrapper implements FetchWrapper {
   fetchJson_arg_path: string = ""
@@ -16,7 +16,7 @@ class SpyFetchWrapper implements FetchWrapper {
 
 class StubFetchWrapper implements FetchWrapper {
   fetchJson(path: string, options: {}): Promise<any> {
-    return Promise.resolve([new Book('Book 1')]);
+    return Promise.resolve([new BookDto('BookDto 1')]);
   }
 }
 
@@ -43,7 +43,7 @@ describe('NetworkBookRepo', () => {
 
 
       expect(books.length).toEqual(1)
-      expect(books[0]).toEqual(new Book('Book 1'))
+      expect(books[0]).toEqual(new BookDto('BookDto 1'))
     })
   })
 })

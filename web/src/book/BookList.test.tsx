@@ -1,14 +1,14 @@
 import BookRepo from '../repo/BookRepo'
-import Book from '../dto/Book'
+import BookDto from '../dto/BookDto'
 import {render, waitForElement} from '@testing-library/react'
 import BookList from './BookList'
 import React from 'react'
 
 class StubBookRepo implements BookRepo {
-  getAll(): Promise<Book[]> {
+  getAll(): Promise<BookDto[]> {
     return Promise.resolve(
-      [new Book('Moby Dick'),
-        new Book('To Kill a Mockingbird')]
+      [new BookDto('Moby Dick'),
+        new BookDto('To Kill a Mockingbird')]
     )
   }
 }

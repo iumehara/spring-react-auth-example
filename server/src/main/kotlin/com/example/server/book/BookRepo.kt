@@ -1,7 +1,7 @@
 package com.example.server.book
 
-import com.example.server.dto.Book
+import com.example.server.dto.BookDto
 
 interface BookRepo {
-    fun getall(): List<Book>
+    fun getall(): List<BookDto>
 }

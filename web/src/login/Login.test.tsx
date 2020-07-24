@@ -2,7 +2,7 @@ import React from 'react'
 import {render, fireEvent} from '@testing-library/react'
 import Login from './Login'
 import AuthRepo from '../repo/AuthRepo'
-import User from '../dto/User'
+import UserDto from '../dto/UserDto'
 import MBRouter from '../router/MBRouter'
 import userEvent from '@testing-library/user-event'
 
@@ -10,11 +10,11 @@ class SpyAuthRepo implements AuthRepo {
   login_arg_username: string = ''
   login_arg_password: string = ''
 
-  login(username: string, password: string): Promise<User> {
+  login(username: string, password: string): Promise<UserDto> {
     this.login_arg_username = username
     this.login_arg_password = password
 
-    return Promise.resolve(new User(''));
+    return Promise.resolve(new UserDto(''));
   }
 }
 

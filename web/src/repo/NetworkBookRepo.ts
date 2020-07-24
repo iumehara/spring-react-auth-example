@@ -1,5 +1,5 @@
 import BookRepo from './BookRepo'
-import Book from '../dto/Book'
+import BookDto from '../dto/BookDto'
 import FetchWrapper from './FetchWrapper'
 import HttpMethod from './HttpMethod'
 
@@ -10,7 +10,7 @@ class NetworkBookRepo implements BookRepo {
     this.fetchWrapper = fetchWrapper
   }
 
-  getAll(): Promise<Book[]> {
+  getAll(): Promise<BookDto[]> {
     const options = {
       method: HttpMethod.GET,
       credentials: 'include'

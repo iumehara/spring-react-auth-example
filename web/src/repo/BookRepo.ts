@@ -1,7 +1,7 @@
-import Book from '../dto/Book'
+import BookDto from '../dto/BookDto'
 
 interface BookRepo {
-  getAll(): Promise<Book[]>
+  getAll(): Promise<BookDto[]>
 }
 
 export default BookRepo

@@ -1,21 +1,34 @@
 import React, {useEffect, useState} from 'react'
 import BookRepo from '../repo/BookRepo'
-import Book from '../dto/Book'
+import BookDto from '../dto/BookDto'
+import AuthRepo from '../repo/AuthRepo'
+import MBRouter from '../router/MBRouter'
 
 type BookListProps = {
-  repo: BookRepo
+  repo: BookRepo,
+  authRepo: AuthRepo,
+  router: MBRouter
 }
 
 function BookList(props: BookListProps) {
-  const [books, setBooks] = useState(Array<Book>())
+  const [books, setBooks] = useState(Array<BookDto>())
 
   useEffect(() => {
     props.repo.getAll()
       .then(books => setBooks(books))
   }, [props.repo])
 
+  const logoutClicked = () => {
+    props.authRepo.logout()
+      .then(response => {
+        console.log(response)
+        props.router.goToLoginPage()
+      })
+  }
+
   return (
     <div>
+      <div onClick={() => logoutClicked()}>logout</div>
       <h1>MyBooks</h1>
 
       <div>
@@ -28,7 +41,7 @@ function BookList(props: BookListProps) {
 }
 
 type BookViewProps = {
-  book: Book
+  book: BookDto
 }
 
 const BookView = (props: BookViewProps) => (

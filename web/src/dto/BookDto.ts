@@ -1,4 +1,4 @@
-class Book {
+class BookDto {
   title: string
 
   constructor(title: string) {
@@ -6,4 +6,4 @@ class Book {
   }
 }
 
-export default Book
+export default BookDto

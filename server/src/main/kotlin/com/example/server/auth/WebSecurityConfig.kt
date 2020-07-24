@@ -27,6 +27,10 @@ class WebSecurityConfig(val dataSource: DataSource) : WebSecurityConfigurerAdapt
                 ?.successForwardUrl("/users/current")
                 ?.failureHandler(SimpleUrlAuthenticationFailureHandler())
 
+        http?.logout()
+                ?.logoutUrl("/logout")?.permitAll()
+                ?.logoutSuccessUrl("/users/logout-success")
+
         http?.cors()
 
         http?.csrf()?.disable()

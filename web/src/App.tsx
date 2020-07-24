@@ -25,10 +25,10 @@ function App() {
             <Login repo={authRepo} router={mbRouter}/>
           </Route>
           <Route path='/books'>
-            <BookList repo={bookRepo}/>
+            <BookList repo={bookRepo} authRepo={authRepo} router={mbRouter}/>
           </Route>
           <Route path='/'>
-            <BookList repo={bookRepo}/>
+            <BookList repo={bookRepo} authRepo={authRepo} router={mbRouter}/>
           </Route>
         </Switch>
       </Router>
