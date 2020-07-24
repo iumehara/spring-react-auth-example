@@ -31,7 +31,7 @@ describe('NetworkBookRepo', () => {
 
 
       expect(fetchWrapper.fetchJson_arg_path).toEqual('/books')
-      expect(fetchWrapper.fetchJson_arg_options).toEqual({})
+      expect(fetchWrapper.fetchJson_arg_options).toEqual({credentials: 'include', method: 'GET'})
     })
 
     test('handles response', async () => {

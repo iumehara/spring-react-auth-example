@@ -14,7 +14,7 @@ class StubBookRepo implements BookRepo {
 }
 
 describe('BookList', () => {
-  it('', async () => {
+  it('displays books on load', async () => {
     const repo = new StubBookRepo()
 
     const renderedBookList = render(<BookList repo={repo}/>)
