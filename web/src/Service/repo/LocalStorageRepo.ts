@@ -17,25 +17,34 @@ class LocalStorageToken {
 }
 
 class LocalStorageRepo implements StorageRepo {
+  getUsername(): Promise<string> {
+    let username = LocalStorageRepo.get(LocalStorageKey.MB_USERNAME)
+    if (username == null) {
+      username = ''
+    }
+
+    return Promise.resolve(username);
+  }
+
   saveUser(user: UserDto): Promise<UserDto> {
-    this.save(new LocalStorageToken(LocalStorageKey.MB_USERNAME, user.username))
+    LocalStorageRepo.save(new LocalStorageToken(LocalStorageKey.MB_USERNAME, user.username))
     return Promise.resolve(user)
   }
 
   deleteUser(): Promise<BooleanDto> {
-    this.delete(LocalStorageKey.MB_USERNAME)
+    LocalStorageRepo.delete(LocalStorageKey.MB_USERNAME)
     return Promise.resolve(new BooleanDto(true))
   }
 
-  private save(token: LocalStorageToken) {
+  private static save(token: LocalStorageToken) {
     localStorage.setItem(token.key, token.value)
   }
 
-  private get(key: LocalStorageKey): Promise<string | null> {
-    return Promise.resolve(localStorage.getItem(key))
+  private static get(key: LocalStorageKey): string | null {
+    return localStorage.getItem(key)
   }
 
-  private delete(key: LocalStorageKey) {
+  private static delete(key: LocalStorageKey) {
     localStorage.removeItem(key)
   }
 }

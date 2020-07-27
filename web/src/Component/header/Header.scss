@@ -1,0 +1,35 @@
+@import "../../Styleguide/index";
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: $action;
+
+  .title {
+    font-size: 60px;
+    font-weight: bold;
+  }
+
+  .user-settings {
+    display: flex;
+    color: white;
+    align-items: center;
+
+    .username {
+      margin: 10px;
+    }
+
+    .logout {
+      margin: 10px;
+      padding: 10px;
+      text-decoration: underline;
+
+      &:hover {
+        background-color: $action-dark;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+    }
+  }
+}

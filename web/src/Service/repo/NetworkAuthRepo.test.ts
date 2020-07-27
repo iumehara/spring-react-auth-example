@@ -1,23 +1,8 @@
 import NetworkAuthRepo from './NetworkAuthRepo'
-import StorageRepo from './StorageRepo'
 import BooleanDto from '../../DTO/BooleanDto'
 import UserDto from '../../DTO/UserDto'
 import {SpyFetchWrapper, StubFetchWrapper} from './FetchWrapperDoubles'
-
-class SpyStorageRepo implements StorageRepo {
-  saveUser_arg_user: UserDto | null = null
-  deleteUser_wasCalled = false
-
-  saveUser(user: UserDto): Promise<UserDto> {
-    this.saveUser_arg_user = user
-    return Promise.resolve(user);
-  }
-
-  deleteUser(): Promise<BooleanDto> {
-    this.deleteUser_wasCalled = true
-    return Promise.resolve(new BooleanDto(true));
-  }
-}
+import {SpyStorageRepo, StubStorageRepo} from './StorageRepoDoubles'
 
 describe('NetworkAuthRepo', () => {
   describe('login', () => {
@@ -82,6 +67,21 @@ describe('NetworkAuthRepo', () => {
 
       expect(storageRepo.deleteUser_wasCalled).toEqual(true)
       expect(response).toEqual(new BooleanDto(true))
+    })
+  })
+
+  describe('currentUsername', () => {
+    test('returns correct data', async() => {
+      const fetchWrapper = new StubFetchWrapper()
+      const storageRepo = new StubStorageRepo()
+      storageRepo.getUsername_returnValue = 'Amy'
+      const repo = new NetworkAuthRepo(fetchWrapper, storageRepo)
+
+
+      const username = await repo.currentUsername()
+
+
+      expect(username).toEqual('Amy')
     })
   })
 })

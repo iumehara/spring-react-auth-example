@@ -42,6 +42,10 @@ class NetworkAuthRepo implements AuthRepo {
       .fetchJson(path, options)
       .then(() => this.storageRepo.deleteUser())
   }
+
+  currentUsername(): Promise<string> {
+    return this.storageRepo.getUsername()
+  }
 }
 
 export default NetworkAuthRepo

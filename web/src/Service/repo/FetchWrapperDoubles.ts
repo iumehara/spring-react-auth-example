@@ -1,6 +1,5 @@
 import FetchWrapper from './FetchWrapper'
 import BookDto from '../../DTO/BookDto'
-import UserDto from '../../DTO/UserDto'
 
 export class SpyFetchWrapper implements FetchWrapper {
   fetchJson_arg_path: string = ""
@@ -16,12 +15,6 @@ export class SpyFetchWrapper implements FetchWrapper {
 
 export class StubFetchWrapper implements FetchWrapper {
   fetchJson_response: any = [new BookDto('BookDto 1')]
-
-  static userStub(): StubFetchWrapper {
-    const wrapper = new StubFetchWrapper()
-    wrapper.fetchJson_response = new UserDto('user1')
-    return wrapper
-  }
 
   fetchJson(path: string, options: {}): Promise<any> {
     return Promise.resolve(this.fetchJson_response);

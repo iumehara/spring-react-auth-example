@@ -1,10 +1,11 @@
 import React from 'react'
-import {render, fireEvent} from '@testing-library/react'
+import {fireEvent, render} from '@testing-library/react'
 import Login from './Login'
 import AuthRepo from '../../Service/repo/AuthRepo'
 import UserDto from '../../DTO/UserDto'
-import MBRouter from '../../Service/router/MBRouter'
 import userEvent from '@testing-library/user-event'
+import BooleanDto from '../../DTO/BooleanDto'
+import {SpyMBRouter} from '../../Service/router/MBRouterDoubles'
 
 class SpyAuthRepo implements AuthRepo {
   login_arg_username: string = ''
@@ -16,18 +17,13 @@ class SpyAuthRepo implements AuthRepo {
 
     return Promise.resolve(new UserDto(''));
   }
-}
 
-class SpyMBRouter implements MBRouter {
-  goToBookListPage_wasCalled = false
-  goToLoginPage_wasCalled = false
-
-  goToBookListPage(): void {
-    this.goToBookListPage_wasCalled = true
+  currentUsername(): Promise<string> {
+    return Promise.resolve('');
   }
 
-  goToLoginPage(): void {
-    this.goToLoginPage_wasCalled = true
+  logout(): Promise<BooleanDto> {
+    return Promise.resolve(new BooleanDto(true));
   }
 }
 

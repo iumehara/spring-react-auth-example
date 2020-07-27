@@ -9,6 +9,7 @@ import DefaultMBRouter from './Service/router/DefaultMBRouter'
 import {Route, Router, Switch} from 'react-router-dom'
 import {createBrowserHistory, History, LocationState} from 'history'
 import LocalStorageRepo from './Service/repo/LocalStorageRepo'
+import Header from './Component/header/Header'
 
 function App() {
   const browserHistory: History<LocationState> = createBrowserHistory()
@@ -28,10 +29,14 @@ function App() {
             <Login repo={authRepo} router={mbRouter}/>
           </Route>
           <Route path='/books'>
-            <BookList repo={bookRepo} authRepo={authRepo} router={mbRouter}/>
+            <Header authRepo={authRepo} router={mbRouter}>
+              <BookList repo={bookRepo} router={mbRouter}/>
+            </Header>
           </Route>
           <Route path='/'>
-            <BookList repo={bookRepo} authRepo={authRepo} router={mbRouter}/>
+            <Header authRepo={authRepo} router={mbRouter}>
+              <BookList repo={bookRepo} router={mbRouter}/>
+            </Header>
           </Route>
         </Switch>
       </Router>
