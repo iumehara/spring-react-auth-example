@@ -1,7 +1,7 @@
 import NetworkAuthRepo from './NetworkAuthRepo'
 import StorageRepo from './StorageRepo'
-import BooleanDto from '../dto/BooleanDto'
-import UserDto from '../dto/UserDto'
+import BooleanDto from '../../DTO/BooleanDto'
+import UserDto from '../../DTO/UserDto'
 import {SpyFetchWrapper, StubFetchWrapper} from './FetchWrapperDoubles'
 
 class SpyStorageRepo implements StorageRepo {

@@ -1,5 +1,5 @@
-import BookRepo from '../repo/BookRepo'
-import BookDto from '../dto/BookDto'
+import BookRepo from '../../Service/repo/BookRepo'
+import BookDto from '../../DTO/BookDto'
 import {render, waitForElement} from '@testing-library/react'
 import BookList from './BookList'
 import React from 'react'

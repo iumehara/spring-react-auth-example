@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import BookRepo from '../repo/BookRepo'
-import BookDto from '../dto/BookDto'
-import AuthRepo from '../repo/AuthRepo'
-import MBRouter from '../router/MBRouter'
+import BookRepo from '../../Service/repo/BookRepo'
+import BookDto from '../../DTO/BookDto'
+import AuthRepo from '../../Service/repo/AuthRepo'
+import MBRouter from '../../Service/router/MBRouter'
 
 type BookListProps = {
   repo: BookRepo,

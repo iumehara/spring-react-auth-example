@@ -1,5 +1,5 @@
 import NetworkBookRepo from './NetworkBookRepo'
-import BookDto from '../dto/BookDto'
+import BookDto from '../../DTO/BookDto'
 import {SpyFetchWrapper, StubFetchWrapper} from './FetchWrapperDoubles'
 
 

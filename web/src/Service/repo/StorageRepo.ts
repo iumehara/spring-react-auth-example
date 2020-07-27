@@ -1,5 +1,5 @@
-import UserDto from '../dto/UserDto'
-import BooleanDto from '../dto/BooleanDto'
+import UserDto from '../../DTO/UserDto'
+import BooleanDto from '../../DTO/BooleanDto'
 
 interface StorageRepo {
   saveUser(user: UserDto): Promise<UserDto>

@@ -1,5 +1,5 @@
 import BookRepo from './BookRepo'
-import BookDto from '../dto/BookDto'
+import BookDto from '../../DTO/BookDto'
 import FetchWrapper from './FetchWrapper'
 import HttpMethod from './HttpMethod'
 

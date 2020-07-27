@@ -1,9 +1,9 @@
 import React from 'react'
 import {render, fireEvent} from '@testing-library/react'
 import Login from './Login'
-import AuthRepo from '../repo/AuthRepo'
-import UserDto from '../dto/UserDto'
-import MBRouter from '../router/MBRouter'
+import AuthRepo from '../../Service/repo/AuthRepo'
+import UserDto from '../../DTO/UserDto'
+import MBRouter from '../../Service/router/MBRouter'
 import userEvent from '@testing-library/user-event'
 
 class SpyAuthRepo implements AuthRepo {

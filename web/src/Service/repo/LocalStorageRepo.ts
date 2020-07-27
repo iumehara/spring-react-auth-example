@@ -1,6 +1,6 @@
-import BooleanDto from '../dto/BooleanDto'
-import UserDto from '../dto/UserDto'
 import StorageRepo from './StorageRepo'
+import UserDto from '../../DTO/UserDto'
+import BooleanDto from '../../DTO/BooleanDto'
 
 enum LocalStorageKey {
   MB_USERNAME = 'MB_USERNAME'

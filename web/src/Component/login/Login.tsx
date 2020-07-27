@@ -1,6 +1,6 @@
 import React, {FormEvent, useState} from 'react'
-import AuthRepo from '../repo/AuthRepo'
-import MBRouter from '../router/MBRouter'
+import AuthRepo from '../../Service/repo/AuthRepo'
+import MBRouter from '../../Service/router/MBRouter'
 import './Login.scss'
 
 type LoginProps = {

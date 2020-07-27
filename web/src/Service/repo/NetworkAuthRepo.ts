@@ -1,8 +1,8 @@
 import AuthRepo from './AuthRepo'
-import UserDto from '../dto/UserDto'
+import UserDto from '../../DTO/UserDto'
 import FetchWrapper from './FetchWrapper'
 import HttpMethod from './HttpMethod'
-import BooleanDto from '../dto/BooleanDto'
+import BooleanDto from '../../DTO/BooleanDto'
 import StorageRepo from './StorageRepo'
 
 class NetworkAuthRepo implements AuthRepo {
