@@ -10,16 +10,21 @@ type HeaderProps = {
 }
 
 function Header(props: HeaderProps) {
-  const [username, setUsername] = useState('')
+  const [username, setUsername] = useState()
 
   useEffect(() => {
     props.authRepo.currentUsername()
-      .then(setUsername)
-  }, [props.authRepo])
+      .then((username) => setUsername(username))
+      .catch(() => props.router.goToLoginPage())
+  }, [props.authRepo, props.router])
 
   const logoutClicked = () => {
     props.authRepo.logout()
       .then(() => props.router.goToLoginPage())
+  }
+
+  if (username === undefined) {
+    return <div className='empty-header'/>
   }
 
   return (

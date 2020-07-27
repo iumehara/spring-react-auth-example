@@ -1,25 +1,9 @@
 import React from 'react'
 import {render, waitForElement} from '@testing-library/react'
-import AuthRepo from '../../Service/repo/auth/AuthRepo'
-import UserDto from '../../DTO/UserDto'
-import BooleanDto from '../../DTO/BooleanDto'
 import Header from './Header'
 import userEvent from '@testing-library/user-event'
 import {SpyMBRouter} from '../../Service/router/MBRouterDoubles'
-
-class StubAuthRepo implements AuthRepo {
-  login(username: string, password: string): Promise<UserDto> {
-    return Promise.resolve(new UserDto(''));
-  }
-
-  currentUsername(): Promise<string> {
-    return Promise.resolve('Amy');
-  }
-
-  logout(): Promise<BooleanDto> {
-    return Promise.resolve(new BooleanDto(true));
-  }
-}
+import {StubAuthRepo} from '../../Service/repo/auth/AuthRepoDoubles'
 
 describe('Header', () => {
   test('displays username', async () => {
@@ -39,7 +23,7 @@ describe('Header', () => {
     expect(usernameDiv).toHaveTextContent('Amy')
   })
 
-  test('displays children', async () => {
+  test('displays children if logged in', async () => {
     const repo = new StubAuthRepo()
     const router = new SpyMBRouter()
 
@@ -54,6 +38,24 @@ describe('Header', () => {
 
     const childDiv = renderedHeader.container.querySelector('.child')
     expect(childDiv).toHaveTextContent('Child')
+  })
+
+  test('does not display children if logged out', () => {
+    const repo = new StubAuthRepo()
+    repo.currentUsername_returnValue = Promise.reject('')
+    const router = new SpyMBRouter()
+
+
+    const renderedHeader = render(
+      <Header authRepo={repo} router={router}>
+        <div className='child'>Child</div>
+      </Header>
+    )
+
+    const emptyHeader = renderedHeader.container.querySelector('.empty-header')
+    expect(emptyHeader).toBeInTheDocument()
+    const childDiv = renderedHeader.container.querySelector('.child')
+    expect(childDiv).not.toBeInTheDocument()
   })
 
   test('logs out', async () => {
@@ -71,5 +73,23 @@ describe('Header', () => {
     await userEvent.click(renderedHeader.container.querySelector('.logout')!)
 
     expect(router.goToLoginPage_wasCalled).toBe(true)
+  })
+
+  test('redirects to login page if not logged in', async() => {
+    const repo = new StubAuthRepo()
+    repo.currentUsername_returnValue = Promise.reject('not logged in')
+    const router = new SpyMBRouter()
+
+
+    const renderedHeader = render(
+      <Header authRepo={repo} router={router}>
+        <div className='child'>Child</div>
+      </Header>
+    )
+    await waitForElement(() => renderedHeader.container.querySelector('.empty-header'))
+
+
+    expect(router.goToLoginPage_wasCalled).toBe(true)
+
   })
 })

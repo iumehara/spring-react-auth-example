@@ -14,10 +14,12 @@ function BookList(props: BookListProps) {
   useEffect(() => {
     props.repo.getAll()
       .then(books => setBooks(books))
-  }, [props.repo])
+      .catch(() => props.router.goToLoginPage())
+  }, [props.repo, props.router])
 
   return (
-    <div>
+    <div className='BookList'>
+      <div>books</div>
       {
         books.map((book, i) => <BookView key={i} book={book}/>)
       }

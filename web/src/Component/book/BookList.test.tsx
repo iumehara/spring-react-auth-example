@@ -6,11 +6,13 @@ import React from 'react'
 import {SpyMBRouter} from '../../Service/router/MBRouterDoubles'
 
 class StubBookRepo implements BookRepo {
+  getAll_returnValue = Promise.resolve(
+    [new BookDto('Moby Dick'),
+      new BookDto('To Kill a Mockingbird')]
+  )
+
   getAll(): Promise<BookDto[]> {
-    return Promise.resolve(
-      [new BookDto('Moby Dick'),
-        new BookDto('To Kill a Mockingbird')]
-    )
+    return this.getAll_returnValue
   }
 }
 
@@ -18,11 +20,26 @@ describe('BookList', () => {
   it('displays books on load', async () => {
     const repo = new StubBookRepo()
 
+
     const renderedBookList = render(<BookList repo={repo} router={new SpyMBRouter()}/>)
     await waitForElement(() => renderedBookList.getByText('Moby Dick'))
+
 
     const titles = renderedBookList.container.querySelectorAll('.title')
     expect(titles.item(0)).toHaveTextContent('Moby Dick')
     expect(titles.item(1)).toHaveTextContent('To Kill a Mockingbird')
+  })
+
+  it('redirects to login page if books are not loaded', async () => {
+    const repo = new StubBookRepo()
+    repo.getAll_returnValue = Promise.reject('could not load books')
+    const router = new SpyMBRouter()
+
+
+    const renderedBookList = render(<BookList repo={repo} router={router}/>)
+    await waitForElement(() => renderedBookList.getByText('books'))
+
+
+    expect(router.goToLoginPage_wasCalled).toBe(true)
   })
 })

@@ -18,12 +18,13 @@ class LocalStorageToken {
 
 class LocalStorageRepo implements StorageRepo {
   getUsername(): Promise<string> {
-    let username = LocalStorageRepo.get(LocalStorageKey.MB_USERNAME)
+    const username = LocalStorageRepo.get(LocalStorageKey.MB_USERNAME)
+
     if (username == null) {
-      username = ''
+      return Promise.reject('username not found')
     }
 
-    return Promise.resolve(username);
+    return Promise.resolve(username!);
   }
 
   saveUser(user: UserDto): Promise<UserDto> {
