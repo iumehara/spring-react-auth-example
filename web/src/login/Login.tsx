@@ -1,6 +1,7 @@
 import React, {FormEvent, useState} from 'react'
 import AuthRepo from '../repo/AuthRepo'
 import MBRouter from '../router/MBRouter'
+import './Login.scss'
 
 type LoginProps = {
   repo: AuthRepo,
@@ -19,17 +20,23 @@ function Login(props: LoginProps) {
   }
 
   return (
-    <form onSubmit={e => formSubmitted(e)}>
-      <div className='username'>
-        <div>username</div>
-        <input onChange={e => setUsername(e.target.value)}/>
-      </div>
-      <div className='password'>
-        <div>password</div>
-        <input type='password' onChange={e => setPassword(e.target.value)}/>
-      </div>
-      <button type='submit'>Login</button>
-    </form>
+    <div className='Login'>
+      <div className='header'>MyBooks</div>
+      <form onSubmit={e => formSubmitted(e)}>
+        <div className='content'>
+        <div className='title'>Login</div>
+        <div className='field username'>
+          <label htmlFor='username'>Username</label>
+          <input id='username' type='text' onChange={e => setUsername(e.target.value)}/>
+        </div>
+        <div className='field password'>
+          <label htmlFor='password'>Password</label>
+          <input id='password' type='password' onChange={e => setPassword(e.target.value)}/>
+        </div>
+        <button type='submit'>Login</button>
+        </div>
+      </form>
+    </div>
   )
 }
 

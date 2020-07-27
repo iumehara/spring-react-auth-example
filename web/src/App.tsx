@@ -1,5 +1,5 @@
 import React from 'react'
-import './App.css'
+import './App.scss'
 import BookList from './book/BookList'
 import BrowserFetchWrapper from './repo/BrowserFetchWrapper'
 import NetworkBookRepo from './repo/NetworkBookRepo'
