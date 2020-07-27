@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import './Header.scss'
-import AuthRepo from '../../Service/repo/AuthRepo'
+import AuthRepo from '../../Service/repo/auth/AuthRepo'
 import MBRouter from '../../Service/router/MBRouter'
 
 type HeaderProps = {

@@ -1,7 +1,7 @@
 import BookRepo from './BookRepo'
-import BookDto from '../../DTO/BookDto'
-import FetchWrapper from './FetchWrapper'
-import HttpMethod from './HttpMethod'
+import BookDto from '../../../DTO/BookDto'
+import FetchWrapper from '../fetch/FetchWrapper'
+import HttpMethod from '../fetch/HttpMethod'
 
 class NetworkBookRepo implements BookRepo {
   private fetchWrapper: FetchWrapper

@@ -1,7 +1,7 @@
 import NetworkAuthRepo from './NetworkAuthRepo'
-import BooleanDto from '../../DTO/BooleanDto'
-import UserDto from '../../DTO/UserDto'
-import {SpyFetchWrapper, StubFetchWrapper} from './FetchWrapperDoubles'
+import BooleanDto from '../../../DTO/BooleanDto'
+import UserDto from '../../../DTO/UserDto'
+import {SpyFetchWrapper, StubFetchWrapper} from '../fetch/FetchWrapperDoubles'
 import {SpyStorageRepo, StubStorageRepo} from './StorageRepoDoubles'
 
 describe('NetworkAuthRepo', () => {

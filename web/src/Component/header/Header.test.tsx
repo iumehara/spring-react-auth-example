@@ -1,6 +1,6 @@
 import React from 'react'
 import {render, waitForElement} from '@testing-library/react'
-import AuthRepo from '../../Service/repo/AuthRepo'
+import AuthRepo from '../../Service/repo/auth/AuthRepo'
 import UserDto from '../../DTO/UserDto'
 import BooleanDto from '../../DTO/BooleanDto'
 import Header from './Header'

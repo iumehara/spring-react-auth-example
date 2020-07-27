@@ -1,6 +1,6 @@
 import StorageRepo from './StorageRepo'
-import UserDto from '../../DTO/UserDto'
-import BooleanDto from '../../DTO/BooleanDto'
+import UserDto from '../../../DTO/UserDto'
+import BooleanDto from '../../../DTO/BooleanDto'
 
 export class SpyStorageRepo implements StorageRepo {
   getUsername_wasCalled = false

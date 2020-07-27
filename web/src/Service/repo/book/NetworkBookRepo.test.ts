@@ -1,6 +1,6 @@
 import NetworkBookRepo from './NetworkBookRepo'
-import BookDto from '../../DTO/BookDto'
-import {SpyFetchWrapper, StubFetchWrapper} from './FetchWrapperDoubles'
+import BookDto from '../../../DTO/BookDto'
+import {SpyFetchWrapper, StubFetchWrapper} from '../fetch/FetchWrapperDoubles'
 
 
 describe('NetworkBookRepo', () => {

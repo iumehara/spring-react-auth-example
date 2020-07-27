@@ -1,5 +1,5 @@
 import FetchWrapper from './FetchWrapper'
-import BookDto from '../../DTO/BookDto'
+import BookDto from '../../../DTO/BookDto'
 
 export class SpyFetchWrapper implements FetchWrapper {
   fetchJson_arg_path: string = ""

@@ -1,5 +1,5 @@
-import UserDto from '../../DTO/UserDto'
-import BooleanDto from '../../DTO/BooleanDto'
+import UserDto from '../../../DTO/UserDto'
+import BooleanDto from '../../../DTO/BooleanDto'
 
 interface StorageRepo {
   getUsername(): Promise<string>

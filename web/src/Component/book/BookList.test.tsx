@@ -1,4 +1,4 @@
-import BookRepo from '../../Service/repo/BookRepo'
+import BookRepo from '../../Service/repo/book/BookRepo'
 import BookDto from '../../DTO/BookDto'
 import {render, waitForElement} from '@testing-library/react'
 import BookList from './BookList'

@@ -1,14 +1,14 @@
 import React from 'react'
 import './App.scss'
 import BookList from './Component/book/BookList'
-import BrowserFetchWrapper from './Service/repo/BrowserFetchWrapper'
-import NetworkBookRepo from './Service/repo/NetworkBookRepo'
+import BrowserFetchWrapper from './Service/repo/fetch/BrowserFetchWrapper'
+import NetworkBookRepo from './Service/repo/book/NetworkBookRepo'
 import Login from './Component/login/Login'
-import NetworkAuthRepo from './Service/repo/NetworkAuthRepo'
+import NetworkAuthRepo from './Service/repo/auth/NetworkAuthRepo'
 import DefaultMBRouter from './Service/router/DefaultMBRouter'
 import {Route, Router, Switch} from 'react-router-dom'
 import {createBrowserHistory, History, LocationState} from 'history'
-import LocalStorageRepo from './Service/repo/LocalStorageRepo'
+import LocalStorageRepo from './Service/repo/auth/LocalStorageRepo'
 import Header from './Component/header/Header'
 
 function App() {

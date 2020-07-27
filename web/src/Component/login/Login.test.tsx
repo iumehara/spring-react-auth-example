@@ -1,7 +1,7 @@
 import React from 'react'
 import {fireEvent, render} from '@testing-library/react'
 import Login from './Login'
-import AuthRepo from '../../Service/repo/AuthRepo'
+import AuthRepo from '../../Service/repo/auth/AuthRepo'
 import UserDto from '../../DTO/UserDto'
 import userEvent from '@testing-library/user-event'
 import BooleanDto from '../../DTO/BooleanDto'

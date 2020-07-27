@@ -1,4 +1,4 @@
-import BookDto from '../../DTO/BookDto'
+import BookDto from '../../../DTO/BookDto'
 
 interface BookRepo {
   getAll(): Promise<BookDto[]>

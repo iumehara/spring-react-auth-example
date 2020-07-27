@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import BookRepo from '../../Service/repo/BookRepo'
+import BookRepo from '../../Service/repo/book/BookRepo'
 import BookDto from '../../DTO/BookDto'
 import MBRouter from '../../Service/router/MBRouter'
 

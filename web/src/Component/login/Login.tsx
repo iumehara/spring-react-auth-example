@@ -1,5 +1,5 @@
 import React, {FormEvent, useState} from 'react'
-import AuthRepo from '../../Service/repo/AuthRepo'
+import AuthRepo from '../../Service/repo/auth/AuthRepo'
 import MBRouter from '../../Service/router/MBRouter'
 import './Login.scss'
 
