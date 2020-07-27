@@ -8,7 +8,7 @@ import NetworkAuthRepo from './repo/NetworkAuthRepo'
 import DefaultMBRouter from './router/DefaultMBRouter'
 import {Route, Router, Switch} from 'react-router-dom'
 import {createBrowserHistory, History, LocationState} from 'history'
-import LocalStorageRepo from './repo/LocalAuthRepo'
+import LocalStorageRepo from './repo/LocalStorageRepo'
 
 function App() {
   const browserHistory: History<LocationState> = createBrowserHistory()
