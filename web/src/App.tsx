@@ -8,6 +8,7 @@ import NetworkAuthRepo from './repo/NetworkAuthRepo'
 import DefaultMBRouter from './router/DefaultMBRouter'
 import {Route, Router, Switch} from 'react-router-dom'
 import {createBrowserHistory, History, LocationState} from 'history'
+import LocalStorageRepo from './repo/LocalAuthRepo'
 
 function App() {
   const browserHistory: History<LocationState> = createBrowserHistory()
@@ -15,7 +16,9 @@ function App() {
 
   const fetchWrapper = new BrowserFetchWrapper()
   const bookRepo = new NetworkBookRepo(fetchWrapper)
-  const authRepo = new NetworkAuthRepo(fetchWrapper)
+
+  const localStorageRepo = new LocalStorageRepo()
+  const authRepo = new NetworkAuthRepo(fetchWrapper, localStorageRepo)
 
   return (
     <div className='App'>

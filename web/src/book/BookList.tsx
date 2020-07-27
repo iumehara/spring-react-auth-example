@@ -20,10 +20,7 @@ function BookList(props: BookListProps) {
 
   const logoutClicked = () => {
     props.authRepo.logout()
-      .then(response => {
-        console.log(response)
-        props.router.goToLoginPage()
-      })
+      .then(response => props.router.goToLoginPage())
   }
 
   return (

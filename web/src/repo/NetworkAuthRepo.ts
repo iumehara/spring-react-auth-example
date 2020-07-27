@@ -3,12 +3,15 @@ import UserDto from '../dto/UserDto'
 import FetchWrapper from './FetchWrapper'
 import HttpMethod from './HttpMethod'
 import BooleanDto from '../dto/BooleanDto'
+import StorageRepo from './StorageRepo'
 
 class NetworkAuthRepo implements AuthRepo {
   private fetchWrapper: FetchWrapper
+  private storageRepo: StorageRepo
 
-  constructor(fetchWrapper: FetchWrapper) {
+  constructor(fetchWrapper: FetchWrapper, localStorageRepo: StorageRepo) {
     this.fetchWrapper = fetchWrapper
+    this.storageRepo = localStorageRepo
   }
 
   login(username: string, password: string): Promise<UserDto> {
@@ -23,7 +26,9 @@ class NetworkAuthRepo implements AuthRepo {
       body: formData
     }
 
-    return this.fetchWrapper.fetchJson(path, options);
+    return this.fetchWrapper
+      .fetchJson(path, options)
+      .then(user => this.storageRepo.saveUser(user))
   }
 
   logout(): Promise<BooleanDto> {
@@ -33,7 +38,9 @@ class NetworkAuthRepo implements AuthRepo {
       credentials: 'include'
     }
 
-    return this.fetchWrapper.fetchJson(path, options);
+    return this.fetchWrapper
+      .fetchJson(path, options)
+      .then(() => this.storageRepo.deleteUser())
   }
 }
 
