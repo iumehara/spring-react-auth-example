@@ -4,6 +4,8 @@ import {render, waitForElement} from '@testing-library/react'
 import BookList from './BookList'
 import React from 'react'
 import {SpyMBRouter} from '../../Service/router/MBRouterDoubles'
+import NewBookDto from '../../DTO/NewBookDto'
+import IntDto from '../../DTO/IntDto'
 
 class StubBookRepo implements BookRepo {
   getAll_returnValue = Promise.resolve(
@@ -13,6 +15,10 @@ class StubBookRepo implements BookRepo {
 
   getAll(): Promise<BookDto[]> {
     return this.getAll_returnValue
+  }
+
+  create(newBook: NewBookDto): Promise<IntDto> {
+    return Promise.resolve(new IntDto(1))
   }
 }
 

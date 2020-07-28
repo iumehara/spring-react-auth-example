@@ -1,3 +1,3 @@
 package com.example.server.dto
 
-data class BookDto(val title: String)
+data class BookDto(val id: Int, val title: String)
