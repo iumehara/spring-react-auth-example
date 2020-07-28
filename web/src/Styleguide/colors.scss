@@ -1,8 +1,10 @@
 $background: #F4F4F4;
 $gray: #4F4F4F;
+$gray-light: #737373;
 $action: #52A1CE;
 $action-dark: #4A91BA;
 
 body {
   background-color: $background;
+  color: $gray;
 }

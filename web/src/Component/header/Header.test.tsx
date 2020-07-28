@@ -6,6 +6,23 @@ import {SpyMBRouter} from '../../Service/router/MBRouterDoubles'
 import {StubAuthRepo} from '../../Service/repo/auth/AuthRepoDoubles'
 
 describe('Header', () => {
+  test('title redirects to book list page', async() => {
+    const repo = new StubAuthRepo()
+    const router = new SpyMBRouter()
+    const renderedHeader = render(
+      <Header authRepo={repo} router={router}>
+        <div/>
+      </Header>
+    )
+    await waitForElement(() => renderedHeader.getByText('Amy'))
+
+
+    await userEvent.click(renderedHeader.container.querySelector('.title')!)
+
+
+    expect(router.goToBookListPage_wasCalled).toBe(true)
+  })
+
   test('displays username', async () => {
     const repo = new StubAuthRepo()
     const router = new SpyMBRouter()

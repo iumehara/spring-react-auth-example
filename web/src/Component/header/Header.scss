@@ -7,8 +7,21 @@
   background-color: $action;
 
   .title {
-    font-size: 60px;
-    font-weight: bold;
+    font-size: 48px;
+    display: flex;
+    .my {
+      font-style: italic;
+    }
+
+    .books {
+      font-weight: bold;
+
+    }
+
+    &:hover {
+      cursor: pointer;
+      color: $gray-light;
+    }
   }
 
   .user-settings {

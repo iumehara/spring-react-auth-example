@@ -6,6 +6,7 @@ import React from 'react'
 import {SpyMBRouter} from '../../Service/router/MBRouterDoubles'
 import NewBookDto from '../../DTO/NewBookDto'
 import IntDto from '../../DTO/IntDto'
+import userEvent from '@testing-library/user-event'
 
 class StubBookRepo implements BookRepo {
   getAll_returnValue = Promise.resolve(
@@ -31,7 +32,7 @@ describe('BookList', () => {
     await waitForElement(() => renderedBookList.getByText('Moby Dick'))
 
 
-    const titles = renderedBookList.container.querySelectorAll('.title')
+    const titles = renderedBookList.container.querySelectorAll('.BookView .title')
     expect(titles.item(0)).toHaveTextContent('Moby Dick')
     expect(titles.item(1)).toHaveTextContent('To Kill a Mockingbird')
   })
@@ -43,9 +44,23 @@ describe('BookList', () => {
 
 
     const renderedBookList = render(<BookList repo={repo} router={router}/>)
-    await waitForElement(() => renderedBookList.getByText('books'))
+    await waitForElement(() => renderedBookList.getByText('Books'))
 
 
     expect(router.goToLoginPage_wasCalled).toBe(true)
+  })
+
+  it('redirects to new book page if button is clicked', async () => {
+    const repo = new StubBookRepo()
+    const router = new SpyMBRouter()
+    const renderedBookList = render(<BookList repo={repo} router={router}/>)
+    await waitForElement(() => renderedBookList.getByText('Moby Dick'))
+
+
+    const addbutton = renderedBookList.container.querySelector('button.add')!
+    await userEvent.click(addbutton)
+
+
+    expect(router.goToNewBookPage_wasCalled).toBe(true)
   })
 })

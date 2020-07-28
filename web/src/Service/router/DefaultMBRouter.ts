@@ -14,6 +14,10 @@ class DefaultMBRouter implements MBRouter {
   goToLoginPage(): void {
     this.browserHistory.push('/login')
   }
+
+  goToNewBookPage(): void {
+    this.browserHistory.push('/books/new')
+  }
 }
 
 export default DefaultMBRouter

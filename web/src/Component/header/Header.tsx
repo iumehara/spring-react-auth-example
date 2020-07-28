@@ -23,6 +23,10 @@ function Header(props: HeaderProps) {
       .then(() => props.router.goToLoginPage())
   }
 
+  const titleClicked = () => {
+    props.router.goToBookListPage()
+  }
+
   if (username === undefined) {
     return <div className='empty-header'/>
   }
@@ -30,7 +34,9 @@ function Header(props: HeaderProps) {
   return (
     <div>
       <div className='Header'>
-        <div className='title'>MyBooks</div>
+        <div className='title' onClick={() => titleClicked()}>
+          <div className='my'>my</div><div className='books'>Books</div>
+        </div>
         <div className='user-settings'>
           <div className='username'>{username}</div>
           <div className='logout' onClick={() => logoutClicked()}>

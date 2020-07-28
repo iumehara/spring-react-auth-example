@@ -21,4 +21,8 @@ button {
     cursor: pointer;
     background-color: $action-dark;
   }
+
+  &.add {
+    width: 50px;
+  }
 }

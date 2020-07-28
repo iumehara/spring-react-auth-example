@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react'
 import BookRepo from '../../Service/repo/book/BookRepo'
 import BookDto from '../../DTO/BookDto'
 import MBRouter from '../../Service/router/MBRouter'
+import './BookList.scss'
+import bookIcon from './book-icon.svg'
 
 type BookListProps = {
   repo: BookRepo,
@@ -17,9 +19,16 @@ function BookList(props: BookListProps) {
       .catch(() => props.router.goToLoginPage())
   }, [props.repo, props.router])
 
+  const goToNewBookPage = () => {
+    props.router.goToNewBookPage()
+  }
+
   return (
     <div className='BookList'>
-      <div>books</div>
+      <div className='header'>
+        <div className='title'>Books</div>
+        <button className='add' onClick={() => goToNewBookPage()}>＋</button>
+      </div>
       {
         books.map((book, i) => <BookView key={i} book={book}/>)
       }
@@ -32,8 +41,11 @@ type BookViewProps = {
 }
 
 const BookView = (props: BookViewProps) => (
-  <div>
-    <div className='title'>{props.book.title}</div>
+  <div className='BookView'>
+    <img src={bookIcon} alt='book-icon' />
+    <div className='content'>
+      <div className='title'>{props.book.title}</div>
+    </div>
   </div>
 )
 
