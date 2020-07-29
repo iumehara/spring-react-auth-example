@@ -1,23 +1,23 @@
 import NetworkBookRepo from './NetworkBookRepo'
 import BookDto from '../../../DTO/BookDto'
-import {SpyFetchWrapper, StubFetchWrapper} from '../fetch/FetchWrapperDoubles'
+import {SpyRestClient, StubRestClient} from '../restclient/RestClientDoubles'
 import NewBookDto from '../../../DTO/NewBookDto'
 import IntDto from '../../../DTO/IntDto'
 
 describe('NetworkBookRepo', () => {
   describe('getAll', () => {
     test('makes correct request', () => {
-      const fetchWrapper = new SpyFetchWrapper()
+      const fetchWrapper = new SpyRestClient()
       const repo = new NetworkBookRepo(fetchWrapper)
 
       repo.getAll()
 
-      expect(fetchWrapper.fetchJson_arg_path).toEqual('/books')
-      expect(fetchWrapper.fetchJson_arg_options).toEqual({credentials: 'include', method: 'GET'})
+      expect(fetchWrapper.fetchJson_arg_path[0]).toEqual('/books')
+      expect(fetchWrapper.fetchJson_arg_options[0]).toEqual({credentials: 'include', method: 'GET'})
     })
 
     test('handles response', async () => {
-      const fetchWrapper = new StubFetchWrapper()
+      const fetchWrapper = new StubRestClient()
       const repo = new NetworkBookRepo(fetchWrapper)
 
       const books = await repo.getAll()
@@ -29,23 +29,23 @@ describe('NetworkBookRepo', () => {
 
   describe('create', () => {
     test('makes correct request', () => {
-      const fetchWrapper = new SpyFetchWrapper()
+      const fetchWrapper = new SpyRestClient()
       const repo = new NetworkBookRepo(fetchWrapper)
 
       repo.create(new NewBookDto('new book'))
 
-      expect(fetchWrapper.fetchJson_arg_path).toEqual('/books')
+      expect(fetchWrapper.fetchJson_arg_path[0]).toEqual('/books')
       const expectedOptions = {
         credentials: 'include',
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: '{\"title\":\"new book\"}'
       }
-      expect(fetchWrapper.fetchJson_arg_options).toEqual(expectedOptions)
+      expect(fetchWrapper.fetchJson_arg_options[0]).toEqual(expectedOptions)
     })
 
     test('handles response', async () => {
-      const fetchWrapper = new StubFetchWrapper()
+      const fetchWrapper = new StubRestClient()
       fetchWrapper.fetchJson_response = new IntDto(1)
       const repo = new NetworkBookRepo(fetchWrapper)
 

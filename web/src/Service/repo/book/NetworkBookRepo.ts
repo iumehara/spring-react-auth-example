@@ -1,14 +1,14 @@
 import BookRepo from './BookRepo'
 import BookDto from '../../../DTO/BookDto'
-import FetchWrapper from '../fetch/FetchWrapper'
-import HttpMethod from '../fetch/HttpMethod'
+import RestClient from '../restclient/RestClient'
+import HttpMethod from '../restclient/HttpMethod'
 import NewBookDto from '../../../DTO/NewBookDto'
 import IntDto from '../../../DTO/IntDto'
 
 class NetworkBookRepo implements BookRepo {
-  private fetchWrapper: FetchWrapper
+  private fetchWrapper: RestClient
 
-  constructor(fetchWrapper: FetchWrapper) {
+  constructor(fetchWrapper: RestClient) {
     this.fetchWrapper = fetchWrapper
   }
 

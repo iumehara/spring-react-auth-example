@@ -1,20 +1,36 @@
 import AuthRepo from './AuthRepo'
 import UserDto from '../../../DTO/UserDto'
-import FetchWrapper from '../fetch/FetchWrapper'
-import HttpMethod from '../fetch/HttpMethod'
+import RestClient from '../restclient/RestClient'
+import HttpMethod from '../restclient/HttpMethod'
 import BooleanDto from '../../../DTO/BooleanDto'
 import StorageRepo from './StorageRepo'
 
 class NetworkAuthRepo implements AuthRepo {
-  private fetchWrapper: FetchWrapper
+  private restClient: RestClient
   private storageRepo: StorageRepo
 
-  constructor(fetchWrapper: FetchWrapper, localStorageRepo: StorageRepo) {
-    this.fetchWrapper = fetchWrapper
+  constructor(restClient: RestClient, localStorageRepo: StorageRepo) {
+    this.restClient = restClient
     this.storageRepo = localStorageRepo
   }
 
   login(username: string, password: string): Promise<UserDto> {
+    return this.preLogin()
+      .then(() => this.loginWithCSRF(username, password))
+      .then(user => this.storageRepo.saveUser(user))
+  }
+
+  preLogin(): Promise<BooleanDto> {
+    const path = '/pre-login'
+    const options = {
+      method: HttpMethod.GET,
+      credentials: 'include'
+    }
+
+    return this.restClient.fetchJson(path, options)
+  }
+
+  loginWithCSRF(username: string, password: string): Promise<UserDto> {
     const formData = new FormData()
     formData.append('username', username)
     formData.append('password', password)
@@ -26,19 +42,17 @@ class NetworkAuthRepo implements AuthRepo {
       body: formData
     }
 
-    return this.fetchWrapper
-      .fetchJson(path, options)
-      .then(user => this.storageRepo.saveUser(user))
+    return this.restClient.fetchJson(path, options)
   }
 
   logout(): Promise<BooleanDto> {
     const path = '/logout'
     const options = {
-      method: HttpMethod.GET,
+      method: HttpMethod.POST,
       credentials: 'include'
     }
 
-    return this.fetchWrapper
+    return this.restClient
       .fetchJson(path, options)
       .then(() => this.storageRepo.deleteUser())
   }

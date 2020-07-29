@@ -1,37 +1,75 @@
 import NetworkAuthRepo from './NetworkAuthRepo'
 import BooleanDto from '../../../DTO/BooleanDto'
 import UserDto from '../../../DTO/UserDto'
-import {SpyFetchWrapper, StubFetchWrapper} from '../fetch/FetchWrapperDoubles'
+import {SpyRestClient, StubRestClient} from '../restclient/RestClientDoubles'
 import {SpyStorageRepo, StubStorageRepo} from './StorageRepoDoubles'
 
 describe('NetworkAuthRepo', () => {
-  describe('login', () => {
+  describe('preLogin', () => {
     test('makes correct request', () => {
-      const fetchWrapper = new SpyFetchWrapper()
+      const fetchWrapper = new SpyRestClient()
       const repo = new NetworkAuthRepo(fetchWrapper, new SpyStorageRepo())
 
 
-      repo.login('user1', 'secret1')
+      repo.preLogin()
+
+
+      expect(fetchWrapper.fetchJson_arg_path.length).toEqual(1)
+      expect(fetchWrapper.fetchJson_arg_path[0]).toEqual('/pre-login')
+    })
+  })
+
+  describe('loginWithCSRF', () => {
+    test('makes correct request', () => {
+      const fetchWrapper = new SpyRestClient()
+      const repo = new NetworkAuthRepo(fetchWrapper, new SpyStorageRepo())
+
+
+      repo.loginWithCSRF('user1', 'secret1')
 
 
       const expectedBody = new FormData()
       expectedBody.append('username', 'user1')
       expectedBody.append('password', 'secret1')
 
-      expect(fetchWrapper.fetchJson_arg_path).toEqual('/login')
-      expect(fetchWrapper.fetchJson_arg_options).toEqual(
+      expect(fetchWrapper.fetchJson_arg_path[0]).toEqual('/login')
+      expect(fetchWrapper.fetchJson_arg_options[0]).toEqual(
         {
           credentials: 'include',
           method: 'POST',
           body: expectedBody
         })
     })
+  })
+
+  describe('login', () => {
+    test('makes correct requests', async () => {
+      const fetchWrapper = new SpyRestClient()
+      const repo = new NetworkAuthRepo(fetchWrapper, new SpyStorageRepo())
+
+
+      await repo.login('user1', 'secret1')
+
+
+      expect(fetchWrapper.fetchJson_arg_path[0]).toEqual('/pre-login')
+      expect(fetchWrapper.fetchJson_arg_options[0]).toEqual({method: 'GET', credentials: 'include'})
+
+      const expectedBody = new FormData()
+      expectedBody.append('username', 'user1')
+      expectedBody.append('password', 'secret1')
+      expect(fetchWrapper.fetchJson_arg_path[1]).toEqual('/login')
+      expect(fetchWrapper.fetchJson_arg_options[1]).toEqual({
+        credentials: 'include',
+        method: 'POST',
+        body: expectedBody
+      })
+    })
 
     test('handles response', async () => {
-      const fetchWrapper = new StubFetchWrapper()
-      fetchWrapper.fetchJson_response = new UserDto('user1')
+      const restClient = new StubRestClient()
+      restClient.fetchJson_response = new UserDto('user1')
       const storageRepo = new SpyStorageRepo()
-      const repo = new NetworkAuthRepo(fetchWrapper, storageRepo)
+      const repo = new NetworkAuthRepo(restClient, storageRepo)
 
 
       const user = await repo.login('user1', 'secret1')
@@ -44,19 +82,19 @@ describe('NetworkAuthRepo', () => {
 
   describe('logout', () => {
     test('makes correct request', () => {
-      const fetchWrapper = new SpyFetchWrapper()
+      const fetchWrapper = new SpyRestClient()
       const repo = new NetworkAuthRepo(fetchWrapper, new SpyStorageRepo())
 
 
       repo.logout()
 
 
-      expect(fetchWrapper.fetchJson_arg_path).toEqual('/logout')
-      expect(fetchWrapper.fetchJson_arg_options).toEqual({credentials: 'include', method: 'GET'})
+      expect(fetchWrapper.fetchJson_arg_path[0]).toEqual('/logout')
+      expect(fetchWrapper.fetchJson_arg_options[0]).toEqual({credentials: 'include', method: 'POST'})
     })
 
     test('handles response', async () => {
-      const fetchWrapper = new StubFetchWrapper()
+      const fetchWrapper = new StubRestClient()
       fetchWrapper.fetchJson_response = true
       const storageRepo = new SpyStorageRepo()
       const repo = new NetworkAuthRepo(fetchWrapper, storageRepo)
@@ -71,8 +109,8 @@ describe('NetworkAuthRepo', () => {
   })
 
   describe('currentUsername', () => {
-    test('returns correct data', async() => {
-      const fetchWrapper = new StubFetchWrapper()
+    test('returns correct data', async () => {
+      const fetchWrapper = new StubRestClient()
       const storageRepo = new StubStorageRepo()
       storageRepo.getUsername_returnValue = 'Amy'
       const repo = new NetworkAuthRepo(fetchWrapper, storageRepo)

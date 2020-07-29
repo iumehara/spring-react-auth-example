@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler
+import org.springframework.security.web.authentication.logout.ForwardLogoutSuccessHandler
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
@@ -20,6 +23,7 @@ class WebSecurityConfig(val dataSource: DataSource) : WebSecurityConfigurerAdapt
 
     override fun configure(http: HttpSecurity?) {
         http?.authorizeRequests()
+                ?.antMatchers("/pre-login", "/post-logout")?.permitAll()
                 ?.anyRequest()?.authenticated()
 
         http?.formLogin()
@@ -29,11 +33,12 @@ class WebSecurityConfig(val dataSource: DataSource) : WebSecurityConfigurerAdapt
 
         http?.logout()
                 ?.logoutUrl("/logout")?.permitAll()
-                ?.logoutSuccessUrl("/users/logout-success")
+                ?.logoutSuccessHandler(logoutSuccessHandler())
 
         http?.cors()
 
-        http?.csrf()?.disable()
+        http?.csrf()
+                ?.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
     }
 
     override fun configure(auth: AuthenticationManagerBuilder?) {
@@ -45,10 +50,15 @@ class WebSecurityConfig(val dataSource: DataSource) : WebSecurityConfigurerAdapt
     }
 
     @Bean
+    fun logoutSuccessHandler(): LogoutSuccessHandler {
+        return ForwardLogoutSuccessHandler("/post-logout")
+    }
+
+    @Bean
     fun corsFilter(): CorsFilter {
         val config = CorsConfiguration()
         config.allowCredentials = true
-        config.exposedHeaders = listOf("Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "X-CSRF-TOKEN")
+        config.exposedHeaders = listOf("Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "X-XSRF-TOKEN")
         config.allowedOrigins = listOf(System.getenv("CLIENT_URL"))
         config.addAllowedHeader("*")
         config.allowedMethods = listOf(GET.toString(), POST.toString())
